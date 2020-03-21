@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGIN_ATTEMPT, LOGIN_FAILED, ERROR, LOGOUT, IS_LOGGED} from '../actions/authActions'
+import {LOGIN_SUCCESS, LOGIN_ATTEMPT, LOGIN_FAILED, ERROR, LOGOUT, FETCH_DATA} from '../actions/authActions'
 
 
 const INITIAL_STATE={
@@ -6,7 +6,7 @@ const INITIAL_STATE={
     isLoading:false,
     userData:{},
     tokenData:{},
-    error:null
+    error:''
   }
   
   export default function auth(state=INITIAL_STATE,action){
@@ -17,27 +17,25 @@ const INITIAL_STATE={
           isLoading: true,
           isLoggedIn: false
         }
-
+      case FETCH_DATA:
+        return{
+          ...state,
+          userData:action.payload.userData,
+          tokenData:action.payload.tokenData
+        }
       case LOGIN_SUCCESS:
         return {
           ...state,
           isLoading: false,
           isLoggedIn: true,
-          tokenData:action.payload.tokenData,
           error: null
-        }
-      case IS_LOGGED:
-        return{
-          ...state,
-          isLoading: false,
-          isLoggedIn: true,
         }
       case LOGIN_FAILED:
         return {
           ...state,
           isLoading: false,
           isLoggedIn: false,
-          error:action.error
+          error:action.payload.error
         }
       case LOGOUT:
         return {

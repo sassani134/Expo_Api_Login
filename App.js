@@ -23,13 +23,15 @@ import SettingScreen from './screens/connected/SettingScreen';
 import AuthLoadingScreen from './screens/unconnected/AuthLoadingScreen'
 const Stack = createStackNavigator();
 
+// Uncomment in case you want to delete state from persistant storage.
+persistor.purge();
 
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <LoginScreen/>
+          <AuthLoadingScreen/>
         </NavigationContainer>
       </PersistGate>
     </Provider>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
 import * as actions from '../../redux/actions/authActions'
+import {LOGIN_SUCCESS, LOGIN_ATTEMPT, LOGIN_FAILED, ERROR, LOGOUT, FETCH_DATA } from '../../redux/actions/authActions'
 
 class LoginScreen extends Component {
   
@@ -30,6 +31,11 @@ class LoginScreen extends Component {
  
   onVerify(){
   console.log(this.props);
+}
+
+onReset(){
+  this.props.reset();
+  console.log("j'ai reset");
 }
 
 
@@ -66,6 +72,11 @@ class LoginScreen extends Component {
           onPress={this.onVerify.bind(this)}
         />
 
+        <Button
+          title={'reset'}
+          style={styles.input}
+          onPress={this.onReset.bind(this)}
+        />
 
       </View>
       
@@ -93,7 +104,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-  isLoggedIn:state.isLoggedIn,
+  isLogged:state.isLoggedIn,
   isLoading:state.isLoading,
   userData:state.userData,
   tokenData:state.auth.tokenData,
@@ -101,7 +112,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  login:(email,password) => dispatch(actions.onLogin({email,password}))
+  login:(email,password) => dispatch(actions.onLogin({email,password})),
+  Verify:() =>dispatch({type: 'LOGOUT'}),
+  reset :() =>dispatch(logout())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen)
