@@ -35,7 +35,7 @@ const INITIAL_STATE={
           ...state,
           isLoading: false,
           isLoggedIn: false,
-          error:action.payload.error
+          error: action.error
         }
       case LOGOUT:
         return {

@@ -8,11 +8,7 @@ import LoginScreen from "../unconnected/LoginScreen";
 
 class FeedScreen extends Component {
   
-  componentDidUpdate() {
-    if (this.isLoggedIn === false || this.tokenData === null || undefined) {
-      this.props.navigation.navigate("Auth");
-    }
-  }
+
 
   render() {
     return (
@@ -25,7 +21,7 @@ class FeedScreen extends Component {
         />
         <Button
           title={'Logout'}
-          onPress={this.props.disconnect}
+          onPress={this.props.disconnect(this.props.tokenData)}
         />
       </View>
     );
@@ -52,16 +48,16 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  tokenData: state.tokenData,
-  isLoggedIn: state.isLoggedIn,
-  isLoading: state.isLoading
+  tokenData: state.auth.tokenData,
+  isLoggedIn: state.auth.isLoggedIn,
+  isLoading: state.auth.isLoading
   
 });
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    disconnect:() => dispatch(actions.onLogout())
+    disconnect:(tokenData) => dispatch(actions.onLogout(tokenData))
     
   };
 

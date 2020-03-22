@@ -1,8 +1,5 @@
 import * as React from 'react';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     StyleSheet,
     View,
 } from 'react-native';
@@ -28,14 +25,14 @@ class AuthLoadingScreen extends React.Component {
     // Render any loading content that you like here
     render() {
 
-      if (this.isLoading === true) {
+      if (this.props.isLoading === true) {
         // We haven't finished checking for the token yet
         return <SplashScreen />;
       }
       return (
         <Stack.Navigator headerMode='none' >
-          {this.props.tokenData && this.props.isLoggedIn &&
-            this.props.tokenData.uid && this.props.tokenData.client && this.props.tokenData.access-token &&
+          {this.props.tokenData  &&
+            this.props.userData &&
             this.props.isLoggedIn === true
            ? (
             <>
@@ -63,9 +60,10 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    tokenData: state.tokenData,
-    isLoggedIn: state.isLoggedIn,
-    isLoading: state.isLoading,
+    tokenData: state.auth.tokenData,
+    userData: state.auth.userData,
+    isLoggedIn: state.auth.isLoggedIn,
+    isLoading: state.auth.isLoading
 
 });
 

@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-  isLogged:state.isLoggedIn,
-  isLoading:state.isLoading,
-  userData:state.userData,
+  isLogged:state.auth.isLoggedIn,
+  isLoading:state.auth.isLoading,
+  userData:state.auth.userData,
   tokenData:state.auth.tokenData,
-  error:state.error
+  error:state.auth.error
 })
 
 const mapDispatchToProps = dispatch => ({
