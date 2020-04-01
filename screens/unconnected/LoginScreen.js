@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
-import * as actions from '../../redux/actions/authActions'
+import {onLogin as performLogin} from '../../redux/actions/authActions'
 import {LOGIN_SUCCESS, LOGIN_ATTEMPT, LOGIN_FAILED, ERROR, LOGOUT, FETCH_DATA } from '../../redux/actions/authActions'
 
 class LoginScreen extends Component {
   
-  componentDidUpdate() {
-    if (this.props.isLoggedIn === true && this.props.tokenData) {
-      this.props.navigation.navigate("App");
-    }
-  }
-
 
   static navigationOptions = {
     header: null,
@@ -71,12 +65,10 @@ onReset(){
           style={styles.input}
           onPress={this.onVerify.bind(this)}
         />
-
-        <Button
-          title={'reset'}
-          style={styles.input}
-          onPress={this.onReset.bind(this)}
-        />
+      <Button
+        title="New"
+        onPress={() => this.props.navigate('Sign_up')}
+      />
 
       </View>
       
@@ -112,9 +104,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  login:(email,password) => dispatch(actions.onLogin({email,password})),
-  Verify:() =>dispatch({type: 'LOGOUT'}),
-  reset :() =>dispatch(logout())
+  login:(email,password) => dispatch(performLogin({email,password}))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(LoginScreen)

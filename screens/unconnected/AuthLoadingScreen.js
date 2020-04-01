@@ -1,18 +1,10 @@
 import * as React from 'react';
-import {
-    StyleSheet,
-    View,
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
 //localisation
-import LoginScreen from '../unconnected/LoginScreen';
-import SignUpScreen from '../unconnected/SignUpScreen';
-import ResetPassword from '../unconnected/ResetPassword';
 import SplashScreen from '../SplashScreen';
-import FeedScreen from '../connected/FeedScreen';
-import SettingScreen from '../connected/SettingScreen';
 import AppNavigator from '../../navigator/AppNavigator';
 import AuthNavigator from '../../navigator/AuthNavigator';
 
@@ -31,9 +23,7 @@ class AuthLoadingScreen extends React.Component {
       }
       return (
         <Stack.Navigator headerMode='none' >
-          {this.props.tokenData  &&
-            this.props.userData &&
-            this.props.isLoggedIn === true
+          {this.props.tokenData  && this.props.userData && this.props.isLoggedIn === true
            ? (
             <>
               <Stack.Screen name="App" component={AppNavigator} />              
@@ -69,7 +59,6 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-    getUserToken: () => dispatch(getUserToken()),
 });
 
-export default connect(mapStateToProps)(AuthLoadingScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(AuthLoadingScreen);

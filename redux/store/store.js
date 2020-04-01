@@ -10,7 +10,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 const persistConfig = {
     //transforms: [immutableTransform()],
     timeout: 10000,
-    key: 'a',
+    key: 'root',
     storage: AsyncStorage,
     //stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
     whitelist: ['auth']

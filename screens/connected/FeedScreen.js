@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
-import * as actions  from "../../redux/actions/authActions";
+import {logout} from "../../redux/actions/authActions";
 
 import LoginScreen from "../unconnected/LoginScreen";
 
 
 class FeedScreen extends Component {
   
-
 
   render() {
     return (
@@ -17,11 +16,11 @@ class FeedScreen extends Component {
         <Text style={styles.instructions}>To get started, edit pp.js</Text>
         <Button
           title={'test'}
-          onPress={console.log(this.props)}
+          onClick={console.log(this.props)}
         />
         <Button
           title={'Logout'}
-          onPress={this.props.disconnect(this.props.tokenData)}
+          onClick={this.props}
         />
       </View>
     );
@@ -57,10 +56,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    disconnect:(tokenData) => dispatch(actions.onLogout(tokenData))
     
   };
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedScreen);
+export default connect(mapStateToProps)(FeedScreen);

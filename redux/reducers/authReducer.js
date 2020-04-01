@@ -39,7 +39,6 @@ const INITIAL_STATE={
         }
       case LOGOUT:
         return {
-          ...state,
           INITIAL_STATE
         }
       default:
