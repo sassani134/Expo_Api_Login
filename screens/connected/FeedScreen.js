@@ -8,7 +8,6 @@ import LoginScreen from "../unconnected/LoginScreen";
 
 class FeedScreen extends Component {
   
-
   render() {
     return (
       <View style={styles.container}>
@@ -16,12 +15,16 @@ class FeedScreen extends Component {
         <Text style={styles.instructions}>To get started, edit pp.js</Text>
         <Button
           title={'test'}
-          onClick={console.log(this.props)}
+          onPress = {() => console.log(this.props)}
         />
         <Button
-          title={'Logout'}
-          onClick={this.props}
-        />
+          title={'BadOut'}
+          onPress = {() => this.props.dispatch(logout())}
+          />
+        
+        <Button
+          title={'FetchOut'}
+          />
       </View>
     );
   }
