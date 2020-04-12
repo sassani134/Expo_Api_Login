@@ -27,10 +27,7 @@ class LoginScreen extends Component {
   console.log(this.props);
 }
 
-onReset(){
-  this.props.reset();
-  console.log("j'ai reset");
-}
+
 
 
   render() {

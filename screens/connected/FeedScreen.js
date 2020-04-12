@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import {logout} from "../../redux/actions/authActions";
-
-import LoginScreen from "../unconnected/LoginScreen";
+import {onLogout as performLogout} from '../../redux/actions/authActions'
 
 
 class FeedScreen extends Component {
   
+  onLogout(){
+    this.props.logout(
+      this.props.tokenData.uid,
+      this.props.tokenData.client,
+      this.props.tokenData['access-token']
+    ).then(() => {})
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -15,7 +22,7 @@ class FeedScreen extends Component {
         <Text style={styles.instructions}>To get started, edit pp.js</Text>
         <Button
           title={'test'}
-          onPress = {() => console.log(this.props)}
+          onPress = {() => console.log(this.props.tokenData.access-token)}
         />
         <Button
           title={'BadOut'}
@@ -24,6 +31,7 @@ class FeedScreen extends Component {
         
         <Button
           title={'FetchOut'}
+          onPress = {this.onLogout.bind(this) }
           />
       </View>
     );
@@ -57,11 +65,8 @@ const mapStateToProps = state => ({
 });
 
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    
-  };
+const mapDispatchToProps = dispatch => ({
+  logout:(uid, client, accessToken) => dispatch(performLogout({uid,client,accessToken}))
+})
 
-};
-
-export default connect(mapStateToProps)(FeedScreen);
+export default connect(mapStateToProps,mapDispatchToProps)(FeedScreen);
