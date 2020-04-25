@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   tokenData: state.auth.tokenData,
   isLoggedIn: state.auth.isLoggedIn,
-  isLoading: state.auth.isLoading
-  
+  isLoading: state.auth.isLoading,
+  error:state.auth.error  
 });
 
 
