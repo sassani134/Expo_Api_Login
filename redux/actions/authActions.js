@@ -1,4 +1,5 @@
 //import EncryptedStorage from 'react-native-encrypted-storage';
+import { Alert } from 'react-native';
 
 //Types
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT'
@@ -38,7 +39,138 @@ export const fetchData = (userData, tokenData) => ({
 
 //https://devise-token-auth.gitbook.io/devise-token-auth/usage
 
-//connexion
+//Email registration
+export function onSignUp(data){
+  return dispatch => {
+    dispatch(isLoading());
+    return fetch('http://192.168.0.46:3000/auth/',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        "email":data.email,
+        "password":data.password,
+        "password-confirmation":data["password-confirmation"]
+      })
+    })
+    .then((response) => {
+      if(response.ok){
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+        })
+        //Do i need to alert the sucess only??
+
+        //Conexion is performed imediatly after the account is created
+        //onLogin(data)
+        
+
+        //Alert the success
+        Alert.alert('Sucess ', 'Account');
+        dispatch(logout);
+
+      }
+      else{
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+          dispatch(isLoading())
+          dispatch(loginFailed(responseJSON.message))
+        })
+      }
+    })
+    .catch((error) => {
+      Alert.alert('Login Failed', 'Some error occured, please retry');
+      console.log("error",error);
+      dispatch(isLoading())
+      dispatch(loginFailed(error))
+    });
+  };
+}
+
+//Account deletion
+export function onDelete(data){
+  return dispatch => {
+    dispatch(isLoading());
+    return fetch(`http://192.168.0.46:3000/auth/`,{
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+       "uid": data.uid,
+       "client": data.client,
+       "access-token": data.accessToken
+     })
+    }
+    )
+    .then((response) => {
+      if(response.ok){
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+          //change
+          Alert.alert('Account deleted', 'Success');
+          dispatch(logout());
+        })
+      }
+      else{
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+          console.log("something happen but it's not an error");
+        })
+      }
+    })
+    .catch((error) => {
+      Alert.alert('Login Failed', 'Some error occured, please retry');
+      console.log("error",error);
+      console.log("response", response);
+
+    });
+  };
+}
+//Account updates
+export function onUpdate(data){
+  return dispatch => {
+    dispatch(isLoading());
+    return fetch(`http://192.168.0.46:3000/auth/`,{
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ 
+       "password": data.password,
+       "password_confirmation": data.password_confirmation
+     })
+    }
+    )
+    .then((response) => {
+      if(response.ok){
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+          //i need to dispatch login false and alert the user
+          dispatch(isLoading()); //maybe it works backward unk
+        })
+      }
+      else{
+        // what can be else with update?
+        response.json().then((responseJSON) => {
+          console.log("responseJSON",responseJSON);
+          console.log("something happen but it's not an error")
+          dispatch(logout()); 
+        })
+      }
+    })
+    .catch((error) => {
+      Alert.alert('Login Failed', 'Some error occured, please retry');
+      console.log("error",error);
+      console.log("response", response);
+      dispatch(logout());
+    });
+  };
+}
+
+//Email authentication
 export function onLogin(data){
   return dispatch => {
     dispatch(isLoading());
@@ -71,13 +203,14 @@ export function onLogin(data){
     })
     .catch((error) => {
       console.log("error",error);
-      dispatch(isLoading())
-      dispatch(loginFailed(error))
+      Alert.alert('Login Failed', 'Some error occured, please retry');
+      dispatch(isLoading());
+      dispatch(loginFailed(error));
     });
   };
 }
 
-//Déconnexion
+// End the user's current session
 export function onLogout(data){
   return dispatch => {
     dispatch(isLoading());
@@ -98,7 +231,8 @@ export function onLogout(data){
       if(response.ok){
         response.json().then((responseJSON) => {
           console.log("responseJSON",responseJSON);
-          console.log("response", response);
+          //bug disapear without response
+          //console.log("response", response);
           //change
           dispatch(logout());
         })
@@ -107,136 +241,26 @@ export function onLogout(data){
         response.json().then((responseJSON) => {
           console.log("responseJSON",responseJSON);
           console.log("response", response);
+          console.log("Probleme de déconnexion");
         })
       }
     })
     .catch((error) => {
+      Alert.alert('Login Failed', 'Some error occured, please retry');
       console.log("error",error);
       console.log("response", response);
+      dispatch(logout());
     });
   };
 }
 
-//Create an account
-export function onSignUp(data){
-  return dispatch => {
-    dispatch(isLoading());
-    return fetch('http://192.168.0.46:3000/auth/',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify({
-        "email":data.email,
-        "password":data.password,
-        "password-confirmation":data.password-confirmation
-      })
-    })
-    .then((response) => {
-      if(response.ok){
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          console.log("Response Token:",response.headers.map);
-          dispatch(fetchData(responseJSON, response.headers.map));
-          dispatch(loginSuccess());
-        })
-      }
-      else{
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          dispatch(isLoading())
-          dispatch(loginFailed(responseJSON.message))
-        })
-      }
-    })
-    .catch((error) => {
-      console.log("error",error);
-      dispatch(isLoading())
-      dispatch(loginFailed(error))
-    });
-  };
-}
+//destination for client authentication (provider)
+//...
 
-//Delete an account
-export function onDelete(data){
-  return dispatch => {
-    dispatch(isLoading());
-    return fetch(`http://192.168.0.46:3000/auth/`,{
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ 
-       "uid": data.uid,
-       "client": data.client,
-       "access-token": data.accessToken
-     })
-    }
-    )
-    .then((response) => {
-      if(response.ok){
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          console.log("response", response);
-          //change
-          dispatch(logout());
-        })
-      }
-      else{
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          console.log("response", response);
-        })
-      }
-    })
-    .catch((error) => {
-      console.log("error",error);
-      console.log("response", response);
-    });
-  };
-}
+//oauth2 provider's callback
+//...
 
-//Update Password
-export function onUpdate(data){
-  return dispatch => {
-    dispatch(isLoading());
-    return fetch(`http://192.168.0.46:3000/auth/`,{
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ 
-       "password": data.password,
-       "password_confirmation": data.password_confirmation
-     })
-    }
-    )
-    .then((response) => {
-      if(response.ok){
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          console.log("response", response);
-          //change
-          dispatch(logout());
-        })
-      }
-      else{
-        response.json().then((responseJSON) => {
-          console.log("responseJSON",responseJSON);
-          console.log("response", response);
-        })
-      }
-    })
-    .catch((error) => {
-      console.log("error",error);
-      console.log("response", response);
-    });
-  };
-}
-
-//
+//validate tokens
 export function checkToken(data){
   return dispatch => {
     dispatch(isLoading());
@@ -275,7 +299,10 @@ export function checkToken(data){
   };
 }
 
-//
+//password concern
+//https://github.com/lynndylanhurley/devise_token_auth/blob/master/docs/usage/reset_password.md
+
+//send a password reset confirmation
 export function onPasswordRecovery(data){
   return dispatch => {
     dispatch(isLoading());
@@ -313,7 +340,7 @@ export function onPasswordRecovery(data){
   };
 }
 
-//nom a changé
+//change users' passwords
 export function onPasswordRecoveryChange(data){
   return dispatch => {
     dispatch(isLoading());
@@ -352,7 +379,7 @@ export function onPasswordRecoveryChange(data){
   };
 }
 
-//nom a changé avant dernier de Usage
+//Verify user by password reset token
 export function verifyUser(data){
   return dispatch => {
     dispatch(isLoading());
@@ -391,7 +418,7 @@ export function verifyUser(data){
 
 }
 
-//nom a changé dernier de Usage
+//Re-sends confirmation email
 export function reSendEmailConfirmation(data){
   return dispatch => {
     dispatch(isLoading());

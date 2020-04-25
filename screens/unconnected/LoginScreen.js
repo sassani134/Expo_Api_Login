@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, TextInput, View, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
 import {onLogin as performLogin} from '../../redux/actions/authActions'
-import {LOGIN_SUCCESS, LOGIN_ATTEMPT, LOGIN_FAILED, ERROR, LOGOUT, FETCH_DATA } from '../../redux/actions/authActions'
 
 class LoginScreen extends Component {
   
@@ -15,7 +14,7 @@ class LoginScreen extends Component {
     
     this.state = {
       email: '',
-      password: '',
+      password: ''
     };
   }
   
@@ -64,7 +63,7 @@ class LoginScreen extends Component {
         />
       <Button
         title="New"
-        onPress={() => this.props.navigate('Sign_up')}
+        onPress={() => this.props.navigation.navigate('SignUp')}
       />
 
       </View>

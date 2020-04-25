@@ -12,7 +12,7 @@ function AuthNavigator() {
     return (
     <Stack.Navigator options={{ headerMode: "none" }} >
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Sign up" component={SignUpScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Reset Password" component={ResetPassword} />
     </Stack.Navigator>
     );
