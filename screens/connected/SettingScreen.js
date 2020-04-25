@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, ScrollView } from 'react-native';
+import {onUpdate, onDelete } from '../../redux/actions/authActions'
 
-export default class SettingScreen extends Component {
+class SettingScreen extends Component {
   constructor(props){
     super(props);
 
@@ -10,10 +11,24 @@ export default class SettingScreen extends Component {
       new_password_confirm:''
     };
   }
+  
+  performChangePassword(){
+    this.props.changePassword(
+      this.state.new_password,
+      this.state.new_password_confirm
+      ).then(() => {})
+  } 
+
+  performDeleteAccount(){
+    this.props.deleteAccount(this.props.tokenData['uid'],
+    this.props.tokenData['access-token'],
+    this.props.tokenData['client']).then(() => {})
+  }
 
   render() {
     //verifie le state global de l'app et si il est vide au départ
     //console.log(this.props)
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -36,15 +51,16 @@ export default class SettingScreen extends Component {
           <Button
             title={'Change password'}
             style={styles.input}
-            onPress={this.props}
+            onPress={this.performChangePassword.bind(this)}
           />
+          
           <Text>
 
           </Text>
           <Button
             title={'delete account'}
             style={styles.input}
-            onPress={this.props}
+            onPress={this.performDeleteAccount.bind(this)}
           />
 
         </View>
@@ -70,3 +86,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+const mapStateToProps = state => ({
+  isLogged:state.auth.isLoggedIn,
+  isLoading:state.auth.isLoading,
+  userData:state.auth.userData,
+  tokenData:state.auth.tokenData,
+  error:state.auth.error
+})
+
+const mapDispatchToProps = dispatch => ({
+  changePassword:(new_password,new_password_confirm) => dispatch(onUpdate({new_password, new_password_confirm})),
+  deleteAccount:(uid, accessToken,client) => dispatch(onDelete({uid, accessToken,client}))
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(SettingScreen)
+
+//uid, access token client || delete ||  /
+//password, password_confirm || /password || put
