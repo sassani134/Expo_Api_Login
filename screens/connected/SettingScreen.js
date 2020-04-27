@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, ScrollView } from 'react-native';
-import {onUpdate, onDelete } from '../../redux/actions/authActions'
+import {onUpdate, onDelete } from '../../redux/actions/authActions';
+import {connect} from 'react-redux';
+
 
 class SettingScreen extends Component {
   constructor(props){
