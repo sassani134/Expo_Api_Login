@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native';
 import {onUpdate, onDelete } from '../../redux/actions/authActions';
 import {connect} from 'react-redux';
 
@@ -24,7 +24,8 @@ class SettingScreen extends Component {
   performDeleteAccount(){
     this.props.deleteAccount(this.props.tokenData['uid'],
     this.props.tokenData['access-token'],
-    this.props.tokenData['client']).then(() => {})
+    this.props.tokenData['client']
+    ).then(() => {})
   }
 
   render() {

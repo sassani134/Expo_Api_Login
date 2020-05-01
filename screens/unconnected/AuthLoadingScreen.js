@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //localisation
 import SplashScreen from '../SplashScreen';
@@ -10,6 +11,7 @@ import AuthNavigator from '../../navigator/AuthNavigator';
 
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 class AuthLoadingScreen extends React.Component {
 
@@ -26,7 +28,7 @@ class AuthLoadingScreen extends React.Component {
           {this.props.tokenData  && this.props.userData && this.props.isLoggedIn === true
            ? (
             <>
-              <Stack.Screen name="App" component={AppNavigator} />              
+              <Stack.Screen name="App" component={AppNavigator} />
             </>
           ) : (
             <>
@@ -40,6 +42,16 @@ class AuthLoadingScreen extends React.Component {
 
     }
 }
+
+export const AppDrawer = () => {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={FeedScreen} />
+      <Drawer.Screen name="Setting" component={SettingScreen} />
+    </Drawer.Navigator>
+  );
+};
+
 
 const styles = StyleSheet.create({
     container: {

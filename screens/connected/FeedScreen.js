@@ -3,8 +3,6 @@ import { Platform, StyleSheet, Text, View, Button } from 'react-native';
 import {connect} from 'react-redux';
 import {logout} from "../../redux/actions/authActions";
 import {onLogout as performLogout} from '../../redux/actions/authActions'
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import SettingScreen from './SettingScreen';
 
 
@@ -28,6 +26,10 @@ class FeedScreen extends Component {
           onPress = {() => console.log(this.props.tokenData.access-token)}
         />
         <Button
+        title={'setting'}
+        onPress = {() => this.props.navigation.navigate('Setting')}
+      />
+        <Button
           title={'BadOut'}
           onPress = {() => this.props.dispatch(logout())}
           />
@@ -36,12 +38,6 @@ class FeedScreen extends Component {
           title={'FetchOut'}
           onPress = {this.onLogout.bind(this) }
           />
-        <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={FeedScreen} />
-            <Drawer.Screen name="Setting" component={SettingScreen} />
-          </Drawer.Navigator>
-        </NavigationContainer>
       </View>
       
     );
