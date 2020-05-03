@@ -25,14 +25,6 @@ class FeedScreen extends Component {
           title={'test'}
           onPress = {() => console.log(this.props.tokenData.access-token)}
         />
-        <Button
-        title={'setting'}
-        onPress = {() => this.props.navigation.navigate('Setting')}
-      />
-        <Button
-          title={'BadOut'}
-          onPress = {() => this.props.dispatch(logout())}
-          />
         
         <Button
           title={'FetchOut'}

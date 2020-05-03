@@ -66,15 +66,16 @@ export function onSignUp(data){
         
 
         //Alert the success
-        Alert.alert('Sucess ', 'Account');
+        Alert.alert('Sucess ', 'Création de compte réussi');
         dispatch(logout);
 
       }
       else{
         response.json().then((responseJSON) => {
           console.log("responseJSON",responseJSON);
+          Alert.alert('Echec ', 'Création de compte raté mdp');
           dispatch(isLoading())
-          dispatch(loginFailed(responseJSON.message))
+          //dispatch(loginFailed(responseJSON.message))
         })
       }
     })
@@ -196,6 +197,7 @@ export function onLogin(data){
       else{
         response.json().then((responseJSON) => {
           console.log("responseJSON",responseJSON);
+          Alert.alert('raté ', 'email ou mdp incorecte');
           dispatch(isLoading())
           dispatch(loginFailed(responseJSON.message))
         })

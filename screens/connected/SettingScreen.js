@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native';
+import {  StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native';
 import {onUpdate, onDelete } from '../../redux/actions/authActions';
 import {connect} from 'react-redux';
 
@@ -105,5 +105,4 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps,mapDispatchToProps)(SettingScreen)
 
-//uid, access token client || delete ||  /
 //password, password_confirm || /password || put
