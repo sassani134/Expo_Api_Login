@@ -1,70 +1,67 @@
+
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button } from 'react-native';
-import {connect} from 'react-redux';
-import {logout} from "../../redux/actions/authActions";
-import {onLogout as performLogout} from '../../redux/actions/authActions'
-import SettingScreen from './SettingScreen';
+import { ScrollView, ActivityIndicator, FlatList, StyleSheet, Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { fetchPost as performPostFetch } from '../../redux/actions/postActions';
 
 
 class FeedScreen extends Component {
-  
-  onLogout(){
-    this.props.logout(
-      this.props.tokenData.uid,
-      this.props.tokenData.client,
-      this.props.tokenData['access-token']
-    ).then(() => {})
-  }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit pp.js</Text>
-        <Button
-          title={'test'}
-          onPress = {() => console.log(this.props.tokenData.access-token)}
-        />
+  constructor(props) {
+    super(props);}
+    
+  componentDidMount(){
+  this.props.fetchPost();
+  }
+  
+  
+  render(){
+    return(
+      <View>
         
-        <Button
-          title={'FetchOut'}
-          onPress = {this.onLogout.bind(this) }
-          />
-      </View>
+      <Button
+      title={'POST'}
+      onPress = {() => console.log(this.props.allPosts)}
+      />
+
+      <Button
+            title={'ERROR'}
+            onPress = {() => console.log(this.props.errorPost)}
+            />
+
+      <Button
+            title={'PENDING'}
+            onPress = {() => console.log(this.props.pendingPost)}
+            />
+
+      <Button
+            title={'ALLProps'}
+            onPress = {() => console.log(this.props)}
+            />
       
-    );
+      <Button
+            title={'Specifique'}
+            onPress = {() => console.log(this.props)}
+            />
+
+      </View>
+
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
 const mapStateToProps = state => ({
-  tokenData: state.auth.tokenData,
-  isLoggedIn: state.auth.isLoggedIn,
-  isLoading: state.auth.isLoading,
-  error:state.auth.error  
-});
+    errorPost: state.post.error,
+    allPosts: state.post.posts,
+    pendingPost: state.post.pending
+})
 
 
 const mapDispatchToProps = dispatch => ({
-  logout:(uid, client, accessToken) => dispatch(performLogout({uid,client,accessToken}))
+  fetchPost:() => dispatch(performPostFetch())
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(FeedScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FeedScreen);

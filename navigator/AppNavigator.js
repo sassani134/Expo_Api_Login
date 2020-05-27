@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from 'react-native';
+import HomeScreen from '../screens/connected/HomeScreen';
 import FeedScreen from '../screens/connected/FeedScreen';
 import SettingScreen from '../screens/connected/SettingScreen';
+import Deconexionscreen from '../screens/connected/DeconexionScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItems } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,24 +20,14 @@ function AppNavigator() {
     );
   }
 
-function Deco(){
-    return(
-        <Button
-        title={'BadOut'}
-        onPress = {() => this.props.dispatch(logout())}
-        />
-    )
-}
 
   const AppDrawer = () => {
     return (
         <Drawer.Navigator>
-            <Drawer.Screen
-                name="FeedScreen"
-                component={FeedScreen}
-            />
-            <Drawer.Screen name="SettingScreen" component={SettingScreen} />
-            <Drawer.Screen name="Déconexion" component={Deco}/>
+            <Drawer.Screen name="Home" component={HomeScreen}/>
+            <Drawer.Screen name="Feed" component={FeedScreen} />
+            <Drawer.Screen name="Setting" component={SettingScreen} />
+            <Drawer.Screen name="Déconexion" component={Deconexionscreen}/>
         </Drawer.Navigator>
     );
 };
@@ -43,3 +35,4 @@ function Deco(){
 
 export default AppNavigator;
 // FeedScreen drawner: SettingScreen HistoryScreen bookmarks profile
+// see twitter instagram tinder cards reddit 9Gag
