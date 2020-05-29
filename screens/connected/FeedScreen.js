@@ -1,22 +1,66 @@
 
 import React, { Component } from 'react';
-import { ScrollView, ActivityIndicator, FlatList, StyleSheet, Text, View, Button } from 'react-native';
+import { ScrollView, ActivityIndicator, FlatList, StyleSheet, Text, View, Button,TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchPost as performPostFetch } from '../../redux/actions/postActions';
 
+const DATA =[
+  {"id":1,
+  "title":"noobTest",
+  "content":"Card Test",
+  "entry":8,// must be correct in the API, need to be a number equal or above 2 and not too much
+  "category_id":1,
+  "tag1":"tag",
+  "tag2":"tagtag",
+  "tag3":"tagtagtag",
+  "user_id":2, // same as the category DB in the API
+  "created_at":"2020-05-15T13:51:23.716Z",
+  "updated_at":"2020-05-15T13:51:23.716Z"},
+  
+  {"id":2,
+  "title":"test-o-test",
+  "content":"loreum ipsum",
+  "entry":4,
+  "category_id":2,
+  "tag1":"test1",
+  "tag2":null,
+  "tag3":null,
+  "user_id":2,
+  "created_at":"2020-05-15T13:51:23.716Z",
+  "updated_at":"2020-05-15T13:51:23.716Z"}
+]
+
+function Item({ title, content, entry, category_id, tag1, tag2, tag3, user_id, updated_at }) {
+  return (
+    <View >
+      <TouchableOpacity >
+        <Text>{title}</Text>
+        <Text>{content}</Text>
+        <Text>{entry}</Text>
+        <Text>{category_id}</Text>
+        <Text>{tag1}</Text>
+        <Text>{tag2}</Text>
+        <Text>{tag3}</Text>
+        <Text>{user_id}</Text>
+        <Text>{updated_at}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 class FeedScreen extends Component {
 
   constructor(props) {
     super(props);}
-    
+  /*  
   componentDidMount(){
   this.props.fetchPost();
   }
-  
+  */
   
   render(){
     return(
+      /*
       <View>
         
       <Button
@@ -38,11 +82,24 @@ class FeedScreen extends Component {
             title={'ALLProps'}
             onPress = {() => console.log(this.props)}
             />
-      
-      <Button
-            title={'Specifique'}
-            onPress = {() => console.log(this.props)}
-            />
+      */
+     <View>
+    <FlatList
+        data={DATA}
+        renderItem={({ item })=>(
+          <Item title={item.title}
+          content={item.content}
+          entry={item.entry}
+          category_id={item.category_id} 
+          tag1={item.tag1}
+          tag2={item.tag2}
+          tag3={item.tag3} 
+          user_id={item.user_id}
+          updated_at={item.updated_at}
+          />
+        )}
+        keyExtractor={(item)=> (item.id)}
+      />
 
       </View>
 
