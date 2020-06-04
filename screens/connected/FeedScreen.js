@@ -1,8 +1,9 @@
-
 import React, { Component } from 'react';
 import { ScrollView, ActivityIndicator, FlatList, StyleSheet, Text, View, Button,TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchPost as performPostFetch } from '../../redux/actions/postActions';
+
+import PostScreen from './PostScreen';
 
 const DATA =[
   {"id":1,
@@ -30,11 +31,10 @@ const DATA =[
   "updated_at":"2020-05-15T13:51:23.716Z"}
 ]
 
-function Item({ title, content, entry, category_id, tag1, tag2, tag3, user_id, updated_at }) {
+function Item({ title, content, entry, category_id, tag1, tag2, tag3, user_id, updated_at  }) {
   return (
-    <View >
-      <TouchableOpacity >
-        <Text>{title}</Text>
+    <View>
+        <Text>Titre:{title}</Text>
         <Text>{content}</Text>
         <Text>{entry}</Text>
         <Text>{category_id}</Text>
@@ -43,7 +43,6 @@ function Item({ title, content, entry, category_id, tag1, tag2, tag3, user_id, u
         <Text>{tag3}</Text>
         <Text>{user_id}</Text>
         <Text>{updated_at}</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -52,11 +51,11 @@ class FeedScreen extends Component {
 
   constructor(props) {
     super(props);}
-  /*  
+  
   componentDidMount(){
   this.props.fetchPost();
   }
-  */
+  
   
   render(){
     return(
@@ -85,18 +84,21 @@ class FeedScreen extends Component {
       */
      <View>
     <FlatList
-        data={DATA}
+        data={this.props.allPosts}
         renderItem={({ item })=>(
-          <Item title={item.title}
-          content={item.content}
-          entry={item.entry}
-          category_id={item.category_id} 
-          tag1={item.tag1}
-          tag2={item.tag2}
-          tag3={item.tag3} 
-          user_id={item.user_id}
-          updated_at={item.updated_at}
-          />
+          <TouchableOpacity onPress = {() => this.props.navigation.navigate('Post') } >
+            <Item style={{flex: 1, flexDirection:'column', justifyContent:'space-evenly', alignItems:'center' }}
+            title={item.title}
+            content={item.content}
+            entry={item.entry}
+            category_id={item.category_id} 
+            tag1={item.tag1}
+            tag2={item.tag2}
+            tag3={item.tag3} 
+            user_id={item.user_id}
+            updated_at={item.updated_at}
+            />
+          </TouchableOpacity>
         )}
         keyExtractor={(item)=> (item.id)}
       />
@@ -122,3 +124,9 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(FeedScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
