@@ -9,7 +9,7 @@ import {
 export function DrawerContent(){
     return(
         <View>
-                    <Drawer.Navigator>
+        <Drawer.Navigator>
             <Drawer.Screen
                 name="FeedScreen"
                 component={FeedScreen}

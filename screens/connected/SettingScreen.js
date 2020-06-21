@@ -57,9 +57,6 @@ class SettingScreen extends Component {
             onPress={this.performChangePassword.bind(this)}
           />
           
-          <Text>
-
-          </Text>
           <Button
             title={'delete account'}
             style={styles.input}

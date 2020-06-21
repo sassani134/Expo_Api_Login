@@ -8,7 +8,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import SplashScreen from '../SplashScreen';
 import AppNavigator from '../../navigator/AppNavigator';
 import AuthNavigator from '../../navigator/AuthNavigator';
-
+import FeedScreen from '../connected/FeedScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

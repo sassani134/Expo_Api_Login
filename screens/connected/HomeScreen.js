@@ -22,7 +22,7 @@ class HomeScreen extends Component {
         <Text style={styles.instructions}>To get started, edit pp.js</Text>
         <Button
           title={'test'}
-          onPress = {() => console.log(this.props.tokenData.access-token)}
+          onPress = {() => console.log(this.props)}
         />
         
         <Button
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   tokenData: state.auth.tokenData,
+  userData: state.auth.userData,
   isLoggedIn: state.auth.isLoggedIn,
   isLoading: state.auth.isLoading,
   error:state.auth.error  
