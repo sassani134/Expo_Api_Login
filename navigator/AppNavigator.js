@@ -7,7 +7,6 @@ import Deconexionscreen from '../screens/connected/DeconexionScreen';
 import PostScreen from '../screens/connected/PostScreen';
 import NewPost from '../screens/connected/NewPost';
 import EditPost from '../screens/connected/EditPost';
-import ShowPost from '../screens/connected/ShowPost';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerItems } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';

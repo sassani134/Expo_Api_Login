@@ -20,7 +20,7 @@ class PostScreen extends Component {
 
      <View>
        <Text>title:{this.props.onePost.title}</Text>
-       <Text>category:{this.props.onePost.category.title}</Text>
+       <Text>category:{this.props.onePost.category_id}</Text>
        <Text>content:{this.props.onePost.content}</Text>
        <Text>creer le:{this.props.onePost.created_at}</Text>
        <Text>entry:{this.props.onePost.entry}</Text>
@@ -30,8 +30,39 @@ class PostScreen extends Component {
        <Text>tag3:{this.props.onePost.tag3}</Text>
        <Button 
        title="test" 
-       onPress = {()=>console.log(this.props.onePost)}
+       onPress = {()=>console.log(this.props)}
         />
+
+
+      {this.props.userData.data.id == this.props.onePost.user_id ? 
+      <View>
+        <Button
+          title="Update"
+        />
+
+        <Button
+          title="Delete"
+        />
+      </View>
+      :
+      <View>
+        <Button
+          title="Sub"
+        />
+
+        <Button
+          title="Unsub"
+        />
+
+      <Button
+        title="Save"
+      />
+      <Button
+        title="Unsave"
+      />
+      </View>
+      }
+
       </View>
 
     )
@@ -41,7 +72,9 @@ class PostScreen extends Component {
 const mapStateToProps = state => ({
     errorPost: state.post.error,
     onePost: state.post.onepost,
-    pendingPost: state.post.pending
+    pendingPost: state.post.pending,
+    tokenData: state.auth.tokenData,
+    userData: state.auth.userData
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -74,3 +107,7 @@ Don: give us money
 Code créateur/ Parainage:type
 Award: type;
 */
+//Basique
+//((Sub/Unsub) & (Save/Unsave))||(update & delete)
+//Advanced
+//(((Sub/Unsub)|| QueueIn/QueueOut) & (Save/Unsave))||(update & delete)
